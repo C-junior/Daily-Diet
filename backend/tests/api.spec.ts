@@ -6,11 +6,12 @@ import { prisma } from '../src/lib/prisma';
 
 describe('Daily Diet API — Fluxo Completo & Permissões', () => {
   beforeAll(async () => {
-    execSync('npx prisma db push --skip-generate', {
+    const npxCmd = process.platform === 'win32' ? 'npx.cmd' : 'npx';
+    execSync(`${npxCmd} prisma db push --skip-generate`, {
       env: { ...process.env, DATABASE_URL: 'file:./test.db' },
       stdio: 'ignore',
     });
-  });
+  }, 30000);
 
   beforeEach(async () => {
     await prisma.meal.deleteMany();
